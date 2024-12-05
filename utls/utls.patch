@@ -46,24 +46,3 @@ index 07b1a3851e..c6c175fbf6 100644
  	peerKey, err := key.Curve().NewPublicKey(clientKeyShare.data)
  	if err != nil {
  		c.sendAlert(alertIllegalParameter)
-diff --git a/utls/conn.go b/utls/conn.go
-index 9d3316b05e..d202e4751c 100644
---- a/utls/conn.go
-+++ b/utls/conn.go
-@@ -588,12 +588,14 @@ func (c *Conn) readChangeCipherSpec() error {
- 
- // readRecordOrCCS reads one or more TLS records from the connection and
- // updates the record layer state. Some invariants:
--//   * c.in must be locked
--//   * c.input must be empty
-+//   - c.in must be locked
-+//   - c.input must be empty
-+//
- // During the handshake one and only one of the following will happen:
- //   - c.hand grows
- //   - c.in.changeCipherSpec is called
- //   - an error is returned
-+//
- // After the handshake one and only one of the following will happen:
- //   - c.hand grows
- //   - c.input is set
